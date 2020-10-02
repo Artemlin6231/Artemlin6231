@@ -1,0 +1,123 @@
+import pygame
+from pygame.draw import *
+
+pygame.init()
+
+FPS = 30
+screen = pygame.display.set_mode((395, 560))
+#рисуем верх
+rect(screen, (165, 42, 42), (0,0, 395, 255))
+b=1
+for i in range(3):
+    rect(screen, (127, 255, 212), (b,11, 134, 180))
+    a=b+15
+    for i in range(2):
+        rect(screen, (0,0,255), (a,19, 53, 42))
+        rect(screen, (0,0,255), (a,69, 53, 108))
+        a+=61
+    b+=180
+grey=(186, 134, 37)
+#рисуем низ
+
+rect(screen, (100,40,0), (0,255, 396, 305))
+#make ball
+def ball(x,y,r):
+    line(screen, (0, 0, 0), (x-1.6*r, y+0.6*r), (x+0.6*r, y+0.6*r), 1)
+    circle(screen, (43, 43, 43), (x, y), r)
+    b=y-0.6*r
+    for i in range(3):
+        line(screen,(0,0,0),(x-0.6*r,b),(x+0.6*r,b+25),1)
+        b+=r/6
+ball(240,500,30)
+ball(70,400,20)
+ball(300,370,20)
+
+
+#рисуем большого cat
+def cat(x1,y,length,wedth,z1,d1):
+    big=pygame.Surface((395,560))
+    big.set_colorkey((0,0,0))
+    ellipse(big,(grey),(250,300,150,60))
+    ellipse(big,(0,0,0),(250,300,150,60),1)
+
+    ellipse(big,(grey),(50,265,260,140))
+    ellipse(big,(0,0,0),(50,265,260,140),1)
+
+    ellipse(big,(grey),(34,330,31,50))
+    ellipse(big,(0,0,0),(34,330,31,50),1)
+
+    ellipse(big,(grey),(56,370,74,40))
+    ellipse(big,(0,0,0),(56,370,74,40),1)
+
+    ellipse(big,(grey),(10,275,100,90))
+    ellipse(big,(0,0,0),(10,275,100,90),1)
+
+
+    circle(big, (grey), (270,370), 45)
+    circle(big, (0,0,0), (270,370), 45,1)
+
+    ellipse(big,(grey),(280,380,35,65))
+    ellipse(big,(0,0,0),(280,380,35,65),1)
+
+
+
+    #ears and eyes
+    polygon(big, (grey), [(85,285), (110,270),
+                                   (105,305)])
+    polygon(big, (0,0,0), [(85,285), (110,270),
+                                   (105,305)],1)
+    polygon(big, (255,100,180), [(90,285), (105,275),
+                                   (105,300)])
+    polygon(big, (0,0,0), [(90,285), (105,275),
+                                   (105,300)],1)
+
+    polygon(big, (grey), [(8,273), (17,305),
+                                   (35,287)])
+    polygon(big, (0,0,0), [(8,273), (17,305),
+                                   (35,287)],1)
+    polygon(big, (255,100,180), [(11,278), (18,300),
+                                   (30,286)])
+    polygon(big, (0,0,0), [(11,278), (18,300),
+                                   (30,286)],1)
+    x=34
+    for i in range(2):
+        ellipse(big, (0,255,170), (x,305,20,25))
+        ellipse(big, (0, 0, 0), (x,305,20,25), 1)
+        ellipse(big, (0, 0, 0), (x+10, 306, 5, 20), 0)
+        x+=46
+    polygon(big, (255,100,180), [(61,340), (69,340),
+                                   (65,345)])
+    polygon(big, (0,0,0), [(61,340), (69,340),
+                                   (65,345)],1)
+    line(big,(0,0,0),(65,345),(65,350),1)
+
+    #усы
+    line(big,(0,0,0),(75,345),(120,340),1)
+    line(big,(0,0,0),(75,348),(120,348),1)
+    line(big,(0,0,0),(75,351),(120,356),1)
+    line(big,(0,0,0),(55,345),(30,340),1)
+    line(big,(0,0,0),(55,348),(30,348),1)
+    line(big,(0,0,0),(55,351),(30,356),1)
+    big=pygame.transform.smoothscale(big,(length,wedth))
+    big=pygame.transform.flip(big,z1,d1)
+    screen.blit(big,(x1,y))
+cat(0,300,200,280,1,0)
+cat(0,200,150,250,1,0)
+cat(200,150,180,280,0,0)
+cat(200,280,150,250,0,0)
+
+
+
+
+
+
+pygame.display.update()
+clock = pygame.time.Clock()
+finished = False
+while not finished:
+    clock.tick(FPS)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            finished = True
+
+pygame.quit()
