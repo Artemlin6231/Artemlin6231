@@ -86,7 +86,7 @@ while finished == False:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 print('Пушка попала',str(count),'раза')
-                pygame.quit()
+                #pygame.quit()
                 finished = True
                 strike = True
             elif event.type == pygame.MOUSEMOTION:
@@ -117,15 +117,20 @@ while finished == False:
                     New_ball = Ball(coordinate_ball_x,coordinate_ball_y)
                     x_change=int(h*math.cos(alpha))
                     y_change=-int(20 * math.sin(alpha))
-                    while New_ball.y<=600 or New_ball.x<=1200:
+                    while New_ball.y<=600 and New_ball.x<=1200 and ((New_target.x-New_ball.x)**2 + (New_target.y-New_ball.y)**2) > ((New_target.r+New_ball.r)**2):
                         clock.tick(40)
                         New_ball.move(x_change,y_change)
                         y_change+=1
-                        if ((New_target.x-New_ball.x)**2 + (New_target.y-New_ball.y)**2) <=(New_target.r+New_ball.r)**2:
-                            strike=True
+                        if ((New_target.x-New_ball.x)**2 + (New_target.y-New_ball.y)**2) < ((New_target.r+New_ball.r)**2):
                             count+=1
-
+                    else:
+                        while New_ball.y <= 600 and New_ball.x <= 1200:
+                            clock.tick(40)
+                            New_ball.move(x_change, y_change)
+                            y_change += 1
+                        circle(screen,(0,0,0),(New_ball.x,New_ball.y),10)
                     strike=True
     New_target.new_target()
 
 pygame.quit()
+
